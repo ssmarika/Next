@@ -67,10 +67,7 @@ const register = () => {
     >
       {(formik) => {
         return (
-          <form
-            onSubmit={formik.handleSubmit}
-            className='flex flex-col justify-between items-center max-w-[600px] shadow-2xl shadow-gray-500 px-8 py-3 min-h-[400px] gap-3'
-          >
+          <form onSubmit={formik.handleSubmit} className='auth-form'>
             <Typography variant='h3' color='secondary'>
               Sign up
             </Typography>
@@ -141,33 +138,31 @@ const register = () => {
               ) : null}
             </FormControl>
 
-            <div className='flex gap-4'>
-              <FormControl fullWidth>
-                <InputLabel>Role</InputLabel>
-                <Select
-                  value={formik.values.role}
-                  label='Role'
-                  {...formik.getFieldProps('role')}
-                  sx={{ minWidth: '220px' }}
-                >
-                  {roles.map((item) => {
-                    return (
-                      <MenuItem
-                        value={item.role}
-                        key={item.id}
-                        sx={{ textTransform: 'capitalize' }}
-                      >
-                        {item.role}
-                      </MenuItem>
-                    );
-                  })}
-                </Select>
-                {formik.touched.role && formik.errors.role ? (
-                  <FormHelperText error>{formik.errors.role}</FormHelperText>
-                ) : null}
-              </FormControl>
+            <FormControl fullWidth>
+              <InputLabel>Role</InputLabel>
+              <Select
+                value={formik.values.role}
+                label='Role'
+                {...formik.getFieldProps('role')}
+              >
+                {roles.map((item) => {
+                  return (
+                    <MenuItem
+                      value={item.role}
+                      key={item.id}
+                      sx={{ textTransform: 'capitalize' }}
+                    >
+                      {item.role}
+                    </MenuItem>
+                  );
+                })}
+              </Select>
+              {formik.touched.role && formik.errors.role ? (
+                <FormHelperText error>{formik.errors.role}</FormHelperText>
+              ) : null}
+            </FormControl>
 
-              {/* <FormControl fullWidth>
+            {/* <FormControl fullWidth>
                 <InputLabel>Gender</InputLabel>
                 <Select
                   {...formik.getFieldProps('gender')}
@@ -178,32 +173,30 @@ const register = () => {
                   <MenuItem value='others'>Others</MenuItem>
                 </Select>
               </FormControl> */}
-              <FormControl fullWidth>
-                <InputLabel>Gender</InputLabel>
-                <Select
-                  value={formik.values.gender}
-                  label='Gender'
-                  {...formik.getFieldProps('gender')}
-                  sx={{ minWidth: '220px' }}
-                >
-                  {genders.map((item) => {
-                    return (
-                      <MenuItem
-                        key={item.id}
-                        value={item.gender}
-                        sx={{ textTransform: 'capitalize' }}
-                      >
-                        {item.gender}
-                      </MenuItem>
-                    );
-                  })}
-                </Select>
+            <FormControl fullWidth>
+              <InputLabel>Gender</InputLabel>
+              <Select
+                value={formik.values.gender}
+                label='Gender'
+                {...formik.getFieldProps('gender')}
+              >
+                {genders.map((item) => {
+                  return (
+                    <MenuItem
+                      key={item.id}
+                      value={item.gender}
+                      sx={{ textTransform: 'capitalize' }}
+                    >
+                      {item.gender}
+                    </MenuItem>
+                  );
+                })}
+              </Select>
 
-                {formik.touched.gender && formik.errors.gender ? (
-                  <FormHelperText error>{formik.errors.gender}</FormHelperText>
-                ) : null}
-              </FormControl>
-            </div>
+              {formik.touched.gender && formik.errors.gender ? (
+                <FormHelperText error>{formik.errors.gender}</FormHelperText>
+              ) : null}
+            </FormControl>
 
             <Button
               type='submit'

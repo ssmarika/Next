@@ -40,10 +40,7 @@ const login = () => {
     >
       {(formik) => {
         return (
-          <form
-            onSubmit={formik.handleSubmit}
-            className='flex flex-col justify-between items-center min-w-[300px] shadow-2xl shadow-gray-500 px-8 py-3 min-h-[300px] gap-3 '
-          >
+          <form onSubmit={formik.handleSubmit} className='auth-form '>
             <Typography variant='h3' color='secondary'>
               Sign in
             </Typography>
