@@ -1,12 +1,18 @@
-import { Box, Button, Typography } from "@mui/material";
-import React from "react";
+'use client';
+import BuyerList from '@/component/BuyerList';
+import SellerList from '@/component/SellerList';
+import React from 'react';
 
 const Home = () => {
+  const userRole = localStorage.getItem('userRole');
   return (
-    <Box>
-      <Typography variant="h3">Ecommerce</Typography>
-      <Button variant="contained">Login</Button>
-    </Box>
+    <div className='flex flex-col justify-center align-middle'>
+      <p className='text-5xl bold underline'>
+        Welcome {window.localStorage.getItem('firstName')}
+      </p>
+
+      {userRole === 'buyer' ? <BuyerList /> : <SellerList />}
+    </div>
   );
 };
 
