@@ -6,6 +6,19 @@ import axios from 'axios';
 // this code is copied from axios instance docs
 const $axios = axios.create({
   baseURL: 'http://localhost:8080',
+  // baseURL: 'https://784d-182-93-83-71.ngrok-free.app',
+});
+
+// Add a request interceptor
+$axios.interceptors.request.use(function (config) {
+  // get token from local storage
+  const token = window.localStorage.getItem('token');
+
+  // if token, add token to header
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
 });
 
 export default $axios;

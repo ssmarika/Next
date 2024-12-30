@@ -5,7 +5,7 @@ import React from 'react';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 
-const ProductCard = () => {
+const ProductCard = (props) => {
   return (
     <Box
       sx={{
@@ -24,18 +24,13 @@ const ProductCard = () => {
         }}
       >
         <Stack direction='row' justifyContent='space-between'>
-          <Typography variant='h5'>Book</Typography>
-          <Chip label='Sajha' color='success' variant='outlined' />
-          <Typography variant='h5'>$400</Typography>
+          <Typography variant='h5'>{props.name}</Typography>
+          <Chip label={props.brand} color='success' variant='outlined' />
+          <Typography variant='h5'>{props.price}</Typography>
         </Stack>
 
         <Typography sx={{ textAlign: 'justify' }}>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius, culpa
-          sapiente. Quia, alias rerum itaque temporibus eum corrupti tempore
-          corporis aut hic cum assumenda officia exercitationem deserunt modi.
-          Numquam dicta sed quod ut veniam, voluptatum magnam in tempore,
-          laudantium ea facere voluptate pariatur quos voluptatibus! Quia iste
-          vitae quos praesentium! ...
+          {props.description}
         </Typography>
         <Stack direction='row' justifyContent='space-between'>
           <Button

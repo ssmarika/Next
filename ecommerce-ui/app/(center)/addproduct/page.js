@@ -19,9 +19,12 @@ import {
 } from '@mui/material';
 import { useMutation } from '@tanstack/react-query';
 import { Formik } from 'formik';
+import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 
 const AddProduct = () => {
+  const router = useRouter();
+
   const { isPending, error, mutate } = useMutation({
     mutationKey: ['Add-product'],
     mutationFn: async (values) => {
@@ -31,7 +34,9 @@ const AddProduct = () => {
         },
       });
     },
-    onSuccess: () => {},
+    onSuccess: () => {
+      router.push('/');
+    },
   });
 
   return (
