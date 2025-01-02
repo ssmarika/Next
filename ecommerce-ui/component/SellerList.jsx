@@ -59,6 +59,7 @@ import { CircularProgress, Pagination } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import React, { useEffect, useState } from 'react';
 import ProductCard from './ProductCard';
+import Loader from './Loader';
 
 const SellerList = () => {
   const [page, setPage] = useState(1);
@@ -95,7 +96,7 @@ const SellerList = () => {
   }, [page]);
 
   if (isPending) {
-    <CircularProgress />;
+    return <Loader />;
   }
 
   if (error) {
