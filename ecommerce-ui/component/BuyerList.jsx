@@ -1,14 +1,19 @@
 import $axios from '@/lib/axios/axios.instance';
 import { CircularProgress, Pagination } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
-import React from 'react';
+import React, { useState } from 'react';
 import ProductCard from './ProductCard';
 
 const BuyerList = () => {
+  const [page, setPage] = useState(1);
+
   const { isPending, error, data } = useQuery({
-    queryKey: ['buyer-list'],
+    queryKey: ['buyer-list', page],
     queryFn: async () => {
-      return await $axios.post('/product/buyer/list', { page: 1, limit: 10 });
+      return await $axios.post('/product/buyer/list', {
+        page: page,
+        limit: 4,
+      });
     },
     onError: (error) => {
       console.log(error);
@@ -27,7 +32,15 @@ const BuyerList = () => {
           return <ProductCard key={item._id} {...item} />;
         })}
       </div>
-      <Pagination count={5} color='secondary' />
+      <Pagination
+        page={page}
+        count={5}
+        color='secondary'
+        size='large'
+        onChange={(_, value) => {
+          setPage(value);
+        }}
+      />
     </div>
   );
 };

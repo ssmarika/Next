@@ -113,9 +113,9 @@ const SellerList = () => {
         page={page}
         count={5}
         color='secondary'
-        // className='card-center'
+        className='my-12'
         size='large'
-        onClick={(_, value) => {
+        onChange={(_, value) => {
           setPage(value);
         }}
       />
