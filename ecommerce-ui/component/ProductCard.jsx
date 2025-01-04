@@ -2,10 +2,11 @@
 import { Box, Button, Chip, Stack, Typography } from '@mui/material';
 import Image from 'next/image';
 import React from 'react';
-import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
+import DeleteProductDialog from './DeleteProductDialog';
 
 const ProductCard = (props) => {
+  const productId = props._id;
   return (
     <Box
       sx={{
@@ -33,13 +34,7 @@ const ProductCard = (props) => {
           {props.description}
         </Typography>
         <Stack direction='row' justifyContent='space-between'>
-          <Button
-            color='error'
-            variant='contained'
-            startIcon={<DeleteOutlineOutlinedIcon />}
-          >
-            Delete
-          </Button>
+          <DeleteProductDialog productId={productId} />
           <Button
             color='success'
             variant='contained'
