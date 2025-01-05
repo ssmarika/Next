@@ -1,5 +1,6 @@
 'use client';
 import BuyerList from '@/component/BuyerList';
+import Header from '@/component/Header';
 import SellerList from '@/component/SellerList';
 import { Button } from '@mui/material';
 import { useRouter } from 'next/navigation';

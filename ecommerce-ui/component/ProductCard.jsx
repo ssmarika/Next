@@ -4,9 +4,12 @@ import Image from 'next/image';
 import React from 'react';
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import DeleteProductDialog from './DeleteProductDialog';
+import { useRouter } from 'next/navigation';
+import { isSeller } from '@/utils/check.role';
 
 const ProductCard = (props) => {
   const productId = props._id;
+  const router = useRouter();
   return (
     <Box
       sx={{
@@ -34,11 +37,14 @@ const ProductCard = (props) => {
           {props.description}
         </Typography>
         <Stack direction='row' justifyContent='space-between'>
-          <DeleteProductDialog productId={productId} />
+          {isSeller() && <DeleteProductDialog productId={productId} />}
           <Button
             color='success'
             variant='contained'
             startIcon={<VisibilityOutlinedIcon />}
+            onClick={() => {
+              router.push(`/product/details/${productId}`);
+            }}
           >
             View More
           </Button>
