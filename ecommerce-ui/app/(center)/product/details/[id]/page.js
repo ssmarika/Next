@@ -1,13 +1,12 @@
-import ProductDetail from '@/component/ProductDetail';
-
+import ProductDetails from '@/component/ProductDetail';
 import React from 'react';
 
-const page = () => {
+const ProductDetailPage = () => {
   return (
     <div>
-      <ProductDetail />
+      <ProductDetails />
     </div>
   );
 };
 
-export default page;
+export default ProductDetailPage;

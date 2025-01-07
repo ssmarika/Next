@@ -2,6 +2,7 @@
 import BuyerList from '@/component/BuyerList';
 import Header from '@/component/Header';
 import SellerList from '@/component/SellerList';
+import { isSeller } from '@/utils/check.role';
 import { Button } from '@mui/material';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
@@ -21,7 +22,20 @@ const Home = () => {
     <div className='flex flex-col justify-center align-middle gap-4'>
       <p className='text-5xl bold underline'>Welcome {firstName}</p>
 
-      <Button
+      {isSeller() && (
+        <Button
+          sx={{ width: '400px' }}
+          variant='contained'
+          color='secondary'
+          size='large'
+          onClick={() => {
+            router.push('/addproduct');
+          }}
+        >
+          Add Product
+        </Button>
+      )}
+      {/* <Button
         sx={{ width: '400px' }}
         variant='contained'
         color='secondary'
@@ -31,7 +45,7 @@ const Home = () => {
         }}
       >
         Add Product
-      </Button>
+      </Button> */}
 
       {userRole === 'buyer' ? <BuyerList /> : <SellerList />}
     </div>

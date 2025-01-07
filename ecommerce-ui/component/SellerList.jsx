@@ -78,7 +78,7 @@
 // };
 
 // export default SellerList;
-
+'use client';
 import $axios from '@/lib/axios/axios.instance';
 import { CircularProgress, Pagination } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';

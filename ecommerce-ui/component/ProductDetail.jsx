@@ -1,61 +1,165 @@
 'use client';
-import { Padding } from '@mui/icons-material';
-import { Stack, Typography } from '@mui/material';
+import DeleteProductDialog from '@/component/DeleteProductDialog';
+import $axios from '@/lib/axios/axios.instance';
+import { isBuyer, isSeller } from '@/utils/check.role';
+import AddIcon from '@mui/icons-material/Add';
+import RemoveIcon from '@mui/icons-material/Remove';
+import {
+  IconButton,
+  Stack,
+  Button,
+  Typography,
+  Chip,
+  Checkbox,
+} from '@mui/material';
+import { useQuery } from '@tanstack/react-query';
 import Image from 'next/image';
+import { useParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import React from 'react';
 
-const ProductDetail = () => {
+const ProductDetails = () => {
+  const router = useRouter();
+  const params = useParams();
+  const [count, setCount] = React.useState(1);
+
+  const { isPending, data } = useQuery({
+    queryKey: ['get-product-detail'],
+    queryFn: async () => {
+      return await $axios.get(`/product/detail/${params.id}`);
+    },
+  });
+
+  const productDetail = data?.data?.product;
+  console.log(productDetail);
+
+  const increaseCount = () => {
+    setCount(count + 1);
+  };
+
+  const decreaseCount = () => {
+    if (count > 1) {
+      setCount(count - 1);
+    }
+  };
+
+  // hit get product detail api
+
   return (
-    <div
-      style={{
-        width: '1000px',
-        height: '500px',
-        boxShadow:
-          ' rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px',
-        display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'flex-start',
-        gap: 20,
-      }}
-    >
-      <div>
-        <img
-          src='https://imgs.search.brave.com/CygsbhsaWNI8bR-fJ-hfUW6boP70Y9UeYTNLIPoZop8/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9kM3U0/ZGhhdWh3dzJhMS5j/bG91ZGZyb250Lm5l/dC9wcm9kdWN0LW1l/ZGlhL1oyLzgwMC84/MDAvU00yMTEyU29u/YW1KYWNrZXQ0MDZU/YWFsLmpwZw'
-          alt='Book image'
-          style={{ height: '100%', width: '500px', objectFit: 'cover' }}
+    <div className='flex flex-col md:flex-row max-w-[90%] mx-auto shadow-2xl rounded-lg overflow-hidden bg-white'>
+      {/* Product Image */}
+      <div className='w-full md:w-1/2 flex justify-center items-center bg-gray-100'>
+        <Image
+          src='/jacket.webp'
+          height={600}
+          width={600}
+          alt='product name'
+          className='object-contain'
         />
       </div>
-      <div
-        sx={{
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'center',
-        }}
-      >
+      {/* Product Details */}
+      <div className='w-full md:w-1/2 flex flex-col items-start p-6 gap-4'>
         <Typography
-          variant='h3'
-          color='secondary'
-          gutterBottom
-          sx={{ fontWeight: 'bold' }}
+          variant='h5'
+          className='font-bold text-gray-800 text-lg md:text-2xl'
         >
-          Jacket
+          {productDetail?.name}
         </Typography>
-        <Typography variant='h5' gutterBottom>
-          Brand: Sonam
+        <Chip
+          label={productDetail?.brand}
+          color='secondary'
+          className='text-sm md:text-base'
+        />
+        <Typography variant='h6' className='text-gray-600 text-base md:text-lg'>
+          {productDetail?.category}
         </Typography>
-        <Typography variant='h5' gutterBottom>
-          Price: 100
+        <Typography
+          variant='h6'
+          className='font-bold text-green-500 text-lg md:text-xl'
+        >
+          ${productDetail?.price}
         </Typography>
-        <Typography variant='h5' gutterBottom>
-          Free Shipping : Available
+        <Stack
+          direction='row'
+          justifyContent='center'
+          alignItems='center'
+          gap={2}
+        >
+          <Typography
+            variant='h6'
+            className='text-gray-500 text-sm md:text-base'
+          >
+            Free Shipping
+          </Typography>
+          {/* console.log(productDetail) */}
+          {/* <Checkbox color='success' checked={productDetail.freeShipping} /> */}
+        </Stack>
+
+        <Typography variant='h6' className='text-gray-500 text-sm md:text-base'>
+          Quantity: {productDetail?.quantity}
         </Typography>
-        {/* <Typography variant='h5' gutterBottom sx={{ objectFit: 'cover' }}>
-            Description: Lorem ipsum, dolor sit amet consectetur adipisicing
-            elit. Pariatur, impedit perfer
-          </Typography> */}
+        <Typography
+          className='text-justify text-gray-600 text-sm md:text-base leading-6'
+          variant='h6'
+        >
+          {productDetail?.description}
+        </Typography>
+        {isBuyer() && (
+          <>
+            {/* Quantity Selector */}
+
+            <Stack
+              direction='row'
+              justifyContent='center'
+              alignItems='center'
+              spacing={4}
+              className='mt-6'
+            >
+              <IconButton color='success' size='large' onClick={increaseCount}>
+                <AddIcon />
+              </IconButton>
+              <Typography
+                variant='h5'
+                className='text-lg font-semibold text-gray-800'
+              >
+                {count}
+              </Typography>
+              <IconButton
+                color='error'
+                size='large'
+                onClick={decreaseCount}
+                disabled={count === 1}
+              >
+                <RemoveIcon />
+              </IconButton>
+            </Stack>
+            {/* Add to Cart Button */}
+            <Button
+              variant='contained'
+              color='success'
+              className='bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-6 rounded-lg mt-4'
+            >
+              Add to Cart
+            </Button>
+          </>
+        )}
+
+        {isSeller() && (
+          <div>
+            <DeleteProductDialog productId={params.id} />
+            <Button
+              variant='contained'
+              onClick={() => {
+                router.push(`/product/edit/${params.id}`);
+              }}
+            >
+              Edit product
+            </Button>
+          </div>
+        )}
       </div>
     </div>
   );
 };
 
-export default ProductDetail;
+export default ProductDetails;
