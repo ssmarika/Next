@@ -95,7 +95,7 @@ const SellerList = () => {
     queryFn: async () => {
       return await $axios.post('/product/seller/list', {
         page: page,
-        limit: 4,
+        limit: 3,
       });
     },
     onError: (error) => {

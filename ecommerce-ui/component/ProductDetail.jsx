@@ -17,8 +17,9 @@ import Image from 'next/image';
 import { useParams } from 'next/navigation';
 import { useRouter } from 'next/navigation';
 import React from 'react';
+import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 
-const ProductDetails = () => {
+const ProductDetail = () => {
   const router = useRouter();
   const params = useParams();
   const [count, setCount] = React.useState(1);
@@ -145,10 +146,13 @@ const ProductDetails = () => {
         )}
 
         {isSeller() && (
-          <div>
+          <div className='flex gap-8'>
             <DeleteProductDialog productId={params.id} />
+
             <Button
               variant='contained'
+              startIcon={<EditOutlinedIcon />}
+              color='success'
               onClick={() => {
                 router.push(`/product/edit/${params.id}`);
               }}
@@ -162,4 +166,4 @@ const ProductDetails = () => {
   );
 };
 
-export default ProductDetails;
+export default ProductDetail;

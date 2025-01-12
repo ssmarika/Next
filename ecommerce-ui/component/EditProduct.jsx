@@ -35,11 +35,21 @@ const EditProduct = () => {
 
   const productDetail = data?.data?.product;
 
+  const { isLoading, error, mutate } = useMutation({
+    mutationKey: ['edit-product'],
+    mutationFn: async (values) => {
+      return await $axios.put(`/product/edit/${params.id}`, values);
+    },
+    onSuccess: () => {
+      router.push(`/product/details/${params.id}`);
+    },
+  });
   return (
     <Box>
       {isPending && <LinearProgress />}
       {productDetail && (
         <Formik
+          enableReinitialize
           initialValues={{
             name: productDetail?.name || '',
             brand: productDetail?.brand || '',
@@ -51,7 +61,7 @@ const EditProduct = () => {
           }}
           validationSchema={addProductValidationSchema}
           onSubmit={(values) => {
-            console.log(values);
+            mutate(values);
           }}
         >
           {(formik) => {
